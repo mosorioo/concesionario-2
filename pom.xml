@@ -82,7 +82,20 @@
 			<version>2.4.5</version>
 		</dependency>
 
-	</dependencies>
+		<!-- Para agregar la httpclientbiblioteca Apache a Maven-->
+		<dependency>
+  			<groupId>org.apache.httpcomponents</groupId>
+  			<artifactId>httpclient</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	
+   <dependency>
+     <groupId>org.springframework</groupId>
+     <artifactId>spring-webmvc</artifactId>
+     <version>5.1.9.RELEASE</version>
+   </dependency>
+ </dependencies>
 
 	<build>
 		<plugins>

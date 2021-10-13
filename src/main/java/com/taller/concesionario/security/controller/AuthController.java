@@ -22,7 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import org.apache.commons.lang3.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,6 +58,7 @@ public class AuthController {
 
     //Espera un json y lo convierte a tipo clase NuevoUsuario
     //url
+    
     @PostMapping("/usuario")
     public ResponseEntity<?> nuevoUsuario(@Valid @RequestBody NuevoUsuario nuevoUsuario,
                                           BindingResult bindingResult){
@@ -134,5 +135,6 @@ public class AuthController {
         usuarioService.deleteUsuario(idUsuario);
         return new ResponseEntity(new Mensaje("Usuario eliminado"), HttpStatus.OK);
     }*/
+    
 
 }
