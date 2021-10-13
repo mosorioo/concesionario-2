@@ -22,6 +22,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import antlr.StringUtils;
+
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
@@ -47,7 +57,8 @@ public class AuthController {
     JwtProvider jwtProvider;
 
     //Espera un json y lo convierte a tipo clase NuevoUsuario
-    @PostMapping("/nuevousuario")
+    //url
+    @PostMapping("/usuario")
     public ResponseEntity<?> nuevoUsuario(@Valid @RequestBody NuevoUsuario nuevoUsuario,
                                           BindingResult bindingResult){
         if(bindingResult.hasErrors()){
@@ -55,6 +66,9 @@ public class AuthController {
         }
         if(usuarioService.existsByUsuario(nuevoUsuario.getNombreUsuario())){
             return new ResponseEntity<>(new Mensaje("Nombre de usuario existente"), HttpStatus.BAD_REQUEST);
+        }
+        if(usuarioService.existsByDni(nuevoUsuario.getDni())){
+            return new ResponseEntity<>(new Mensaje("DNI existente"), HttpStatus.BAD_REQUEST);
         }
         if(usuarioService.existsByEmail(nuevoUsuario.getEmail())){
             return new ResponseEntity<>(new Mensaje("E-mail existente"), HttpStatus.BAD_REQUEST);
@@ -88,4 +102,37 @@ public class AuthController {
         JwtDto jwtDto = new JwtDto(jwt, userDetails.getUsername(), userDetails.getAuthorities());
         return new ResponseEntity<>(jwtDto, HttpStatus.OK);
     }
+
+    // Actualizar usuario
+
+    /*
+    @PutMapping("/usuario/actualizar/{idUsuario}")
+    public ResponseEntity<?> actualizarUsuario(@PathVariable("idUsuario") int idUsuario, @RequestBody NuevoUsuario nuevoUsuario){
+
+        if (!usuarioService.existsByIdUsuario(idUsuario))
+        return new ResponseEntity(new Mensaje("No existe el usuario"), HttpStatus.NOT_FOUND);
+
+        if (usuarioService.existsByUsuario(nuevoUsuario.getNombreUsuario())
+                && usuarioService.getByUsuario(nuevoUsuario.getNombreUsuario()).get().getIdUsuario() != idUsuario)
+            return new ResponseEntity(new Mensaje("El nombre del usuario ya existe"), HttpStatus.NOT_FOUND);
+
+        if(StringUtils.isBlank(nuevoUsuario.getNombreUsuario()))
+            return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+
+        Usuario usuario = usuarioService.getUsuario(idUsuario).get();
+        usuario.setUsuario(nuevoUsuario.getNombreUsuario());
+        usuarioService.save(usuario);
+        return new ResponseEntity(new Mensaje("Usuario actualizado"), HttpStatus.OK);
+    }*/
+
+    //Eliminar usuario
+    /*
+    @DeleteMapping("/usuario/borrar/{idUsuario}")
+    public ResponseEntity<?> borrarUsuario(@PathVariable("idUsuario") int idUsuario){
+        if (!usuarioService.existsByIdUsuario(idUsuario))
+            return new ResponseEntity(new Mensaje("No existe el usuario"), HttpStatus.NOT_FOUND);
+        usuarioService.deleteUsuario(idUsuario);
+        return new ResponseEntity(new Mensaje("Usuario eliminado"), HttpStatus.OK);
+    }*/
+
 }
