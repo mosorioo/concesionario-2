@@ -54,10 +54,10 @@ public class AuthController {
             return new ResponseEntity<>(new Mensaje("Campos mal o email invalido"), HttpStatus.BAD_REQUEST);
         }
         if(usuarioService.existsByUsuario(nuevoUsuario.getNombreUsuario())){
-            return new ResponseEntity<>(new Mensaje("Ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("Nombre de usuario existente"), HttpStatus.BAD_REQUEST);
         }
         if(usuarioService.existsByEmail(nuevoUsuario.getEmail())){
-            return new ResponseEntity<>(new Mensaje("Ese email ya existe"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("E-mail existente"), HttpStatus.BAD_REQUEST);
         }
 
         Usuario usuario = new Usuario(nuevoUsuario.getNombreUsuario(), nuevoUsuario.getApellido(), nuevoUsuario.getNombre(), nuevoUsuario.getDni(), 
@@ -71,7 +71,7 @@ public class AuthController {
 
         usuarioService.save(usuario);
 
-        return new ResponseEntity<>(new Mensaje("Usuario creado"), HttpStatus.CREATED);
+        return new ResponseEntity<>(new Mensaje("Usuario creado"), HttpStatus.CREATED); //Agregar: mostrar los datos del usuario creado
     }
 
     @PostMapping("/login")
