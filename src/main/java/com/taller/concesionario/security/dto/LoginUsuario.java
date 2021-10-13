@@ -1,6 +1,6 @@
 package com.taller.concesionario.security.dto;
 
-import javax.validation.constraints.Email;
+//import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 public class LoginUsuario {
