@@ -13,6 +13,7 @@ public class ConcesionarioApplication {
 		SpringApplication.run(ConcesionarioApplication.class, args);
 	}
 
+	
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
